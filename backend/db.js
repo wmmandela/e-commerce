@@ -8,7 +8,7 @@ if (process.env.VERCEL && !usesTurso) {
 }
 const sqlite3 = usesTurso ? null : require('sqlite3').verbose();
 const turso = usesTurso
-  ? require('@libsql/client').createClient({
+  ? require('@libsql/client/web').createClient({
       url: process.env.TURSO_DATABASE_URL,
       authToken: process.env.TURSO_AUTH_TOKEN
     })
