@@ -85,7 +85,7 @@
                 <span v-else>{{ transaction.result_desc || pendingText(transaction.status) }}</span>
                 <small v-if="transaction.result_code !== null && transaction.result_code !== undefined">Result {{ transaction.result_code }}</small>
               </td>
-              <td class="action-cell">
+              <td class="action-cell" data-label="Order">
                 <router-link :to="`/order-confirmation/${transaction.order_id}`" class="order-link">View order</router-link>
               </td>
             </tr>
@@ -231,5 +231,30 @@ function pendingText(status) {
 @media (max-width: 760px) {
   .summary-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .page-heading h1 { font-size: 1.8rem; }
+}
+@media (max-width: 640px) {
+  .transactions-page { padding: 1.25rem .875rem 2rem; }
+  .page-heading { align-items: stretch; }
+  .page-heading .btn { min-height: 44px; }
+  .summary-grid { grid-template-columns: 1fr 1fr; gap: .6rem; }
+  .summary-card { padding: .85rem; min-width: 0; }
+  .summary-card span { font-size: .72rem; }
+  .summary-card strong { font-size: 1.1rem; overflow-wrap: anywhere; }
+  .pending-note { line-height: 1.5; }
+  .ledger-toolbar { padding: .85rem; align-items: stretch; }
+  .filters { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .filter-button { padding: .55rem .35rem; font-size: .74rem; }
+  .search-box { width: 100%; }
+  .table-scroll { overflow: visible; }
+  .transactions-table, .transactions-table tbody { display: block; width: 100%; min-width: 0; }
+  .transactions-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); }
+  .transactions-table tr { display: grid; grid-template-columns: 1fr 1fr; gap: .45rem .75rem; padding: .85rem; border-top: 1px solid var(--border); }
+  .transactions-table td { display: block; min-width: 0; border: 0; padding: 0; font-size: .8rem; overflow-wrap: anywhere; }
+  .transactions-table td::before { content: attr(data-label); display: block; color: var(--text-muted); font-size: .66rem; font-weight: 700; text-transform: uppercase; letter-spacing: .035em; margin-bottom: .15rem; }
+  .transactions-table td.numeric { text-align: left; }
+  .transactions-table .receipt-cell { max-width: none; }
+  .transactions-table .action-cell { grid-column: 1 / -1; padding-top: .35rem; }
+  .transactions-table tr:hover td { background: transparent; }
+  .empty-state { padding: 2.5rem .75rem; }
 }
 </style>

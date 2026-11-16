@@ -1,8 +1,8 @@
 <template>
   <div class="home-page">
     <!-- Hero Banner (Kenyan Tech & Lifestyle) -->
-    <section style="background: linear-gradient(135deg, #064e3b 0%, #022c22 60%, #0f172a 100%); color: white; padding: 4.5rem 0 5rem; position: relative; overflow: hidden;">
-      <div class="container" style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 3rem; align-items: center;">
+    <section class="home-hero" style="background: linear-gradient(135deg, #064e3b 0%, #022c22 60%, #0f172a 100%); color: white; padding: 4.5rem 0 5rem; position: relative; overflow: hidden;">
+      <div class="container home-hero-layout" style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 3rem; align-items: center;">
         <div>
           <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(16, 185, 129, 0.2); border: 1px solid rgba(16, 185, 129, 0.4); padding: 0.35rem 0.85rem; border-radius: var(--radius-full); font-size: 0.8125rem; color: #a7f3d0; margin-bottom: 1.25rem;">
             <span>🇰🇪 Shop local, shop with confidence</span>
@@ -116,7 +116,7 @@
         </div>
 
         <!-- Products Grid -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
+        <div class="product-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
           <ProductCard 
             v-for="product in productStore.featuredProducts" 
             :key="product.id" 

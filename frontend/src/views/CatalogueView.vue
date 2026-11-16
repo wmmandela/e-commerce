@@ -112,7 +112,7 @@
         </div>
 
         <!-- Product Grid -->
-        <div v-else style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem;">
+        <div v-else class="product-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem;">
           <ProductCard 
             v-for="product in productStore.products" 
             :key="product.id" 
