@@ -1,0 +1,21 @@
+# Dependencies and generated output
+node_modules/
+**/node_modules/
+frontend/dist/
+
+# Local deployments and credentials
+.vercel/
+**/.vercel/
+.env
+.env.*
+**/.env
+**/.env.*
+!.env.example
+!**/.env.example
+
+# Local SQLite databases and sidecar files
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+

@@ -1,0 +1,27 @@
+{
+  "name": "e-commerce",
+  "version": "1.0.0",
+  "description": "Full-Stack E-Commerce Application with Vue 3, Express, SQLite, Cross-Device Shopping Sync and Safaricom Daraja M-Pesa",
+  "scripts": {
+    "start": "node run.js",
+    "dev": "node run.js",
+    "backend": "cd backend && npm run dev",
+    "frontend": "cd frontend && npm run dev",
+    "build": "npm run build --workspace frontend"
+  },
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "keywords": [
+    "vue",
+    "ecommerce",
+    "express",
+    "sqlite",
+    "mpesa",
+    "daraja",
+    "cross-device"
+  ],
+  "author": "Mandela Machera",
+  "license": "MIT"
+}
