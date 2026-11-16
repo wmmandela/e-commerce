@@ -1,12 +1,12 @@
 <template>
-  <div class="container" style="padding: 2.5rem 1.25rem 4rem;">
+  <div class="container orders-page" style="padding: 2.5rem 1.25rem 4rem;">
     <!-- Breadcrumb -->
     <div style="font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 1.5rem;">
       <router-link to="/" style="color: var(--primary);">Home</router-link> / 
       <span>My Orders</span>
     </div>
 
-    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+    <div class="orders-heading" style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
       <div>
         <h1 style="font-size: 2.25rem; font-weight: 800;">My Order History</h1>
         <p style="color: var(--text-muted); font-size: 0.9375rem;">
@@ -32,20 +32,20 @@
       </router-link>
     </div>
 
-    <div v-else style="display: flex; flex-direction: column; gap: 1.25rem;">
+    <div v-else class="orders-list" style="display: flex; flex-direction: column; gap: 1.25rem;">
       <div 
         v-for="ord in orders" 
         :key="ord.id" 
-        class="card"
+        class="card order-card"
         style="padding: 1.5rem; transition: all 0.2s;"
       >
-        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 1rem; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.75rem;">
+        <div class="order-card-heading" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 1rem; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.75rem;">
           <div>
             <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Order Number</span>
             <div style="font-weight: 800; font-size: 1.1rem; color: var(--text-main);">{{ ord.order_number }}</div>
           </div>
 
-          <div style="display: flex; align-items: center; gap: 1.5rem; font-size: 0.875rem;">
+          <div class="order-meta" style="display: flex; align-items: center; gap: 1.5rem; font-size: 0.875rem;">
             <div>
               <span style="color: var(--text-muted);">Date: </span>
               <strong>{{ new Date(ord.created_at).toLocaleDateString('en-GB') }}</strong>
@@ -84,8 +84,8 @@
           </div>
         </div>
 
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
-          <div style="font-size: 0.875rem; color: var(--text-muted);">
+        <div class="order-card-footer" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+          <div class="order-recipient" style="font-size: 0.875rem; color: var(--text-muted);">
             Recipient: <strong>{{ ord.shipping_name }}</strong> • {{ ord.shipping_estate }}, {{ ord.shipping_county }} ({{ ord.shipping_phone }})
           </div>
 

@@ -19,6 +19,7 @@
           <img 
             :src="product.image_url" 
             :alt="product.title" 
+            class="product-detail-image"
             style="width: 100%; height: 480px; object-fit: cover;"
           />
           <span v-if="product.is_featured" class="product-badge-featured" style="top: 1rem; left: 1rem; font-size: 0.75rem;">
@@ -27,7 +28,7 @@
         </div>
 
         <!-- Trust Badges in Kenya -->
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-top: 1.25rem;">
+        <div class="product-trust-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-top: 1.25rem;">
           <div class="card" style="padding: 0.75rem; text-align: center;">
             <div style="font-size: 1.25rem;">🇰🇪</div>
             <div style="font-size: 0.75rem; font-weight: 700; margin-top: 0.25rem;">KEBS Certified</div>
@@ -107,7 +108,7 @@
         </div>
 
         <!-- Purchase Action Controls -->
-        <div style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap;">
+        <div class="product-actions" style="display: flex; gap: 1rem; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap;">
           <!-- Quantity counter -->
           <div style="display: flex; align-items: center; border: 1px solid var(--border); border-radius: var(--radius-lg); background: #ffffff;">
             <button 

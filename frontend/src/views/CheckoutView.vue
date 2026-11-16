@@ -1,12 +1,12 @@
 <template>
-  <div class="container" style="padding: 2.5rem 1.25rem 5rem;">
+  <div class="container checkout-page" style="padding: 2.5rem 1.25rem 5rem;">
     <!-- Breadcrumb -->
     <div style="font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 1.5rem;">
       <router-link to="/cart" style="color: var(--primary);">Shopping Cart</router-link> / 
       <span>Checkout</span>
     </div>
 
-    <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 2rem;">Checkout & M-Pesa Payment</h1>
+    <h1 class="checkout-title" style="font-size: 2rem; font-weight: 800; margin-bottom: 2rem;">Checkout & M-Pesa Payment</h1>
 
     <div style="display: grid; grid-template-columns: 1.6fr 1fr; gap: 2rem; align-items: flex-start;" class="checkout-layout">
       <!-- Checkout Form -->

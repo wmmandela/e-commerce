@@ -1,21 +1,21 @@
 <template>
-  <div class="container" style="padding: 2.5rem 1.25rem 4rem;">
+  <div class="container catalogue-page" style="padding: 2.5rem 1.25rem 4rem;">
     <!-- Breadcrumb & Title -->
     <div style="margin-bottom: 2rem;">
       <div style="font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 0.5rem;">
         <router-link to="/" style="color: var(--primary);">Home</router-link> / 
         <span>Catalogue</span>
       </div>
-      <h1 style="font-size: 2.25rem; font-weight: 800;">Product Catalogue in Kenya</h1>
+      <h1 class="catalogue-title" style="font-size: 2.25rem; font-weight: 800;">Shop</h1>
       <p style="color: var(--text-muted); font-size: 0.9375rem;">
-        Browse genuine smartphones, laptops, audio gear, Bata boots, and KEBS-approved appliances.
+        Phones, laptops, audio, fashion, and home essentials.
       </p>
     </div>
 
     <!-- Layout Grid: Sidebar Filters + Products -->
     <div style="display: grid; grid-template-columns: 260px 1fr; gap: 2rem; align-items: start;" class="catalogue-layout">
       <!-- Sidebar Filters -->
-      <aside class="card" style="padding: 1.5rem; position: sticky; top: 5.5rem;">
+      <aside class="card catalogue-filter-card" style="padding: 1.5rem; position: sticky; top: 5.5rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
           <h3 style="font-size: 1.1rem; font-weight: 700;">Filters</h3>
           <button @click="resetFilters" style="font-size: 0.75rem; color: var(--primary); font-weight: 700;">
@@ -59,38 +59,40 @@
           </div>
         </div>
 
-        <!-- Brand Filter -->
-        <div class="form-group" style="margin-top: 1.5rem;">
-          <label class="form-label" style="font-size: 0.8125rem;">Brand</label>
-          <select class="form-input" v-model="productStore.selectedBrand" @change="productStore.fetchProducts()">
-            <option value="all">All Brands</option>
-            <option v-for="b in productStore.availableBrands" :key="b" :value="b">{{ b }}</option>
-          </select>
-        </div>
+        <div class="filter-select-row">
+          <!-- Brand Filter -->
+          <div class="form-group" style="margin-top: 1.5rem;">
+            <label class="form-label" style="font-size: 0.8125rem;">Brand</label>
+            <select class="form-input" v-model="productStore.selectedBrand" @change="productStore.fetchProducts()">
+              <option value="all">All Brands</option>
+              <option v-for="b in productStore.availableBrands" :key="b" :value="b">{{ b }}</option>
+            </select>
+          </div>
 
-        <!-- Sort Option -->
-        <div class="form-group" style="margin-top: 1.5rem;">
-          <label class="form-label" style="font-size: 0.8125rem;">Sort By</label>
-          <select class="form-input" v-model="productStore.sortOption" @change="productStore.fetchProducts()">
-            <option value="featured">Featured First</option>
-            <option value="price_asc">Price: Low to High</option>
-            <option value="price_desc">Price: High to Low</option>
-            <option value="rating">Highest Rated</option>
-            <option value="newest">Newest Arrivals</option>
-          </select>
+          <!-- Sort Option -->
+          <div class="form-group" style="margin-top: 1.5rem;">
+            <label class="form-label" style="font-size: 0.8125rem;">Sort By</label>
+            <select class="form-input" v-model="productStore.sortOption" @change="productStore.fetchProducts()">
+              <option value="featured">Featured First</option>
+              <option value="price_asc">Price: Low to High</option>
+              <option value="price_desc">Price: High to Low</option>
+              <option value="rating">Highest Rated</option>
+              <option value="newest">Newest Arrivals</option>
+            </select>
+          </div>
         </div>
       </aside>
 
       <!-- Main Products View -->
       <main>
         <!-- Bar: Results summary -->
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; background: #ffffff; padding: 0.875rem 1.25rem; border-radius: var(--radius-lg); border: 1px solid var(--border);">
+        <div class="catalogue-results-bar" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; background: #ffffff; padding: 0.875rem 1.25rem; border-radius: var(--radius-lg); border: 1px solid var(--border);">
           <span style="font-size: 0.875rem; color: var(--text-muted);">
             Showing <strong>{{ productStore.products.length }}</strong> products
             <span v-if="productStore.activeCategory !== 'all'"> in <em>{{ getActiveCategoryName() }}</em></span>
           </span>
 
-          <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.8125rem; color: var(--text-muted);">
+          <div class="catalogue-currency" style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.8125rem; color: var(--text-muted);">
             <span>Currency: <strong>KSh (Kenyan Shilling)</strong></span>
           </div>
         </div>
@@ -206,5 +208,23 @@ function getActiveCategoryName() {
   .catalogue-layout {
     grid-template-columns: 1fr !important;
   }
+}
+
+@media (max-width: 640px) {
+  .catalogue-page { padding: 1.1rem .875rem 2rem !important; }
+  .catalogue-page > div:first-child { margin-bottom: 1rem !important; }
+  .catalogue-title { font-size: 1.8rem !important; }
+  .catalogue-layout { gap: .8rem !important; }
+  .catalogue-filter-card { position: static !important; padding: .9rem !important; }
+  .catalogue-filter-card > div:first-child { margin-bottom: .65rem !important; }
+  .catalogue-filter-card .form-group { margin-top: .7rem !important; margin-bottom: 0; }
+  .filter-select-row { display: grid; grid-template-columns: 1fr 1fr; gap: .65rem; }
+  .filter-select-row .form-group { min-width: 0; }
+  .category-filter-list { width: 100%; }
+  .category-filter-list .filter-pill { width: max-content !important; flex: 0 0 auto !important; white-space: nowrap; }
+  .catalogue-results-bar { padding: .7rem .85rem !important; margin-bottom: .8rem !important; }
+  .catalogue-results-bar > span { font-size: .8rem !important; }
+  .catalogue-currency { display: none !important; }
+  .catalogue-page .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: .65rem !important; }
 }
 </style>

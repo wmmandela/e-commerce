@@ -1,5 +1,5 @@
 <template>
-  <div class="container" style="padding: 2.5rem 1.25rem 4rem;">
+  <div class="container cart-page" style="padding: 2.5rem 1.25rem 4rem;">
     <!-- Title & Device Synced Notice -->
     <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
       <div>
@@ -18,7 +18,7 @@
     </div>
 
     <!-- Empty State -->
-    <div v-if="cartStore.items.length === 0" class="card" style="text-align: center; padding: 5rem 2rem;">
+    <div v-if="cartStore.items.length === 0" class="card cart-empty-card" style="text-align: center; padding: 5rem 2rem;">
       <div style="width: 5rem; height: 5rem; background: var(--primary-light); color: var(--primary); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 1.5rem;">
         <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="9" cy="21" r="1"/>

@@ -1,10 +1,10 @@
 <template>
-  <div class="container" style="padding: 3rem 1.25rem 5rem; max-width: 760px;">
+  <div class="container order-confirmation-page" style="padding: 3rem 1.25rem 5rem; max-width: 760px;">
     <div v-if="loading" style="text-align: center; padding: 4rem 0;">
       <p>Loading your order details...</p>
     </div>
 
-    <div v-else-if="order" class="card" style="padding: 2.5rem; border-radius: var(--radius-xl); box-shadow: var(--shadow-lg);">
+    <div v-else-if="order" class="card order-receipt" style="padding: 2.5rem; border-radius: var(--radius-xl); box-shadow: var(--shadow-lg);">
       <!-- Success Icon -->
       <div style="text-align: center; margin-bottom: 2rem;">
         <div :style="order.status === 'paid' ? 'width: 4.5rem; height: 4.5rem; background: #d1fae5; color: #059669; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 1rem;' : 'width: 4.5rem; height: 4.5rem; background: #fef3c7; color: #b45309; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 1rem;'">
@@ -28,7 +28,7 @@
 
       <!-- Key Details Card -->
       <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;">
-        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; font-size: 0.875rem;">
+        <div class="order-detail-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; font-size: 0.875rem;">
           <div>
             <span style="color: var(--text-muted); display: block; margin-bottom: 0.25rem;">Order Number</span>
             <strong style="font-size: 1rem; color: var(--primary);">{{ order.order_number }}</strong>
@@ -103,7 +103,7 @@
       </div>
 
       <!-- Action Buttons -->
-      <div v-if="order.status === 'paid'" style="display: flex; gap: 1rem; flex-wrap: wrap;">
+      <div v-if="order.status === 'paid'" class="receipt-actions" style="display: flex; gap: 1rem; flex-wrap: wrap;">
         <button @click="printReceipt" class="btn btn-outline" style="flex: 1;">
           🖨️ Print Invoice
         </button>

@@ -1,5 +1,5 @@
 <template>
-  <div class="container" style="padding: 2.5rem 1.25rem 4rem;">
+  <div class="container devices-page" style="padding: 2.5rem 1.25rem 4rem;">
     <!-- Breadcrumb -->
     <div style="font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 1.5rem;">
       <router-link to="/" style="color: var(--primary);">Home</router-link> / 
@@ -24,7 +24,7 @@
     </div>
 
     <!-- Top Status Cards Grid -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem;">
+    <div class="device-status-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem;">
       <!-- Active Device -->
       <div class="card" style="border-left: 4px solid var(--primary);">
         <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.25rem;">
@@ -148,7 +148,7 @@
       </div>
 
       <div style="overflow-x: auto;">
-        <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.875rem;">
+        <table class="devices-table" style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.875rem;">
           <thead>
             <tr style="border-bottom: 1px solid var(--border); color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase;">
               <th style="padding: 0.875rem 1.5rem;">Device Name</th>
@@ -165,21 +165,21 @@
               :key="d.id"
               style="border-bottom: 1px solid var(--border);"
             >
-              <td style="padding: 1rem 1.5rem;">
+              <td data-label="Device" style="padding: 1rem 1.5rem;">
                 <div style="font-weight: 700; color: var(--text-main);">{{ d.device_name }}</div>
               </td>
-              <td style="padding: 1rem;">
+              <td data-label="Type" style="padding: 1rem;">
                 <span style="text-transform: capitalize; background: #f1f5f9; padding: 0.2rem 0.5rem; border-radius: var(--radius-sm); font-size: 0.75rem;">
                   {{ d.device_type || 'desktop' }}
                 </span>
               </td>
-              <td style="padding: 1rem; color: var(--text-muted);">
+              <td data-label="OS & Browser" style="padding: 1rem; color: var(--text-muted);">
                 {{ d.os || 'macOS' }} • {{ d.browser || 'Browser' }}
               </td>
-              <td style="padding: 1rem; color: var(--text-muted);">
+              <td data-label="Last Active" style="padding: 1rem; color: var(--text-muted);">
                 {{ new Date(d.last_active).toLocaleString('en-GB') }}
               </td>
-              <td style="padding: 1rem;">
+              <td data-label="Status" style="padding: 1rem;">
                 <span 
                   v-if="d.device_id === authStore.deviceId"
                   style="background: #d1fae5; color: #065f46; font-size: 0.6875rem; font-weight: 800; padding: 0.2rem 0.5rem; border-radius: var(--radius-full);"
@@ -193,7 +193,7 @@
                   REMOTE DEVICE
                 </span>
               </td>
-              <td style="padding: 1rem 1.5rem; text-align: right;">
+              <td data-label="Action" style="padding: 1rem 1.5rem; text-align: right;">
                 <button 
                   v-if="d.device_id !== authStore.deviceId"
                   @click="disconnectDevice(d.device_id)" 

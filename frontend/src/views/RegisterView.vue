@@ -1,6 +1,6 @@
 <template>
-  <div class="container" style="padding: 4rem 1.25rem 6rem; max-width: 520px;">
-    <div class="card" style="padding: 2.5rem; border-radius: var(--radius-xl); box-shadow: var(--shadow-lg);">
+  <div class="container auth-page" style="padding: 4rem 1.25rem 6rem; max-width: 520px;">
+    <div class="card auth-card" style="padding: 2.5rem; border-radius: var(--radius-xl); box-shadow: var(--shadow-lg);">
       <div style="text-align: center; margin-bottom: 2rem;">
         <div class="brand-icon" style="margin: 0 auto 1rem; width: 3.25rem; height: 3.25rem;">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -53,7 +53,7 @@
           </span>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+        <div class="register-location-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
           <div class="form-group">
             <label class="form-label">County</label>
             <select class="form-input" v-model="county">
