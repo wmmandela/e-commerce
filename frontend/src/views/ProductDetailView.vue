@@ -160,7 +160,7 @@
     <!-- Related Products -->
     <div v-if="product?.related && product.related.length > 0" style="margin-top: 5rem; border-top: 1px solid var(--border); padding-top: 3rem;">
       <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 1.5rem;">Similar Products in Kenya</h2>
-      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem;">
+      <div class="related-product-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem;">
         <ProductCard 
           v-for="rel in product.related" 
           :key="rel.id" 

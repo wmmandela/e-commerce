@@ -72,17 +72,19 @@
     <!-- Categories Strip -->
     <section style="padding: 3rem 0 2rem;">
       <div class="container">
-        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1.5rem;">
+        <div class="browse-section-heading" style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1.5rem;">
           <div>
             <h2 style="font-size: 1.75rem; font-weight: 800;">Featured Categories</h2>
             <p style="color: var(--text-muted); font-size: 0.9375rem;">Find something for every part of your day</p>
           </div>
-          <router-link to="/catalogue" style="color: var(--primary); font-weight: 700; font-size: 0.875rem;">
-            View All →
-          </router-link>
+          <div class="browse-controls">
+            <button class="rail-arrow" aria-label="Scroll categories left" @click="scrollRail(categoriesRail, -1)">‹</button>
+            <button class="rail-arrow" aria-label="Scroll categories right" @click="scrollRail(categoriesRail, 1)">›</button>
+            <router-link to="/catalogue" class="browse-all">View All →</router-link>
+          </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 1rem;">
+        <div ref="categoriesRail" class="category-rail" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 1rem;">
           <div 
             v-for="cat in productStore.categories" 
             :key="cat.id" 
@@ -105,18 +107,20 @@
     <!-- Featured Products Showcase -->
     <section style="padding: 2.5rem 0 4rem;">
       <div class="container">
-        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem;">
+        <div class="browse-section-heading" style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem;">
           <div>
             <span style="color: var(--primary); font-size: 0.8125rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em;">Editor's Pick</span>
             <h2 style="font-size: 2rem; font-weight: 800;">Top Trending in Kenya</h2>
           </div>
-          <router-link to="/catalogue" class="btn btn-secondary btn-sm">
-            Browse Full Catalogue
-          </router-link>
+          <div class="browse-controls">
+            <button class="rail-arrow" aria-label="Scroll featured products left" @click="scrollRail(featuredRail, -1)">‹</button>
+            <button class="rail-arrow" aria-label="Scroll featured products right" @click="scrollRail(featuredRail, 1)">›</button>
+            <router-link to="/catalogue" class="btn btn-secondary btn-sm browse-all">Browse Full Catalogue</router-link>
+          </div>
         </div>
 
         <!-- Products Grid -->
-        <div class="product-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
+        <div ref="featuredRail" class="product-grid product-rail" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
           <ProductCard 
             v-for="product in productStore.featuredProducts" 
             :key="product.id" 
@@ -170,13 +174,21 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useProductStore } from '../stores/products';
 import ProductCard from '../components/ProductCard.vue';
 
 const router = useRouter();
 const productStore = useProductStore();
+const categoriesRail = ref(null);
+const featuredRail = ref(null);
+
+function scrollRail(railRef, direction) {
+  const rail = railRef?.value || railRef;
+  if (!rail) return;
+  rail.scrollBy({ left: direction * Math.max(rail.clientWidth * 0.75, 220), behavior: 'smooth' });
+}
 
 onMounted(async () => {
   await productStore.fetchCategories();

@@ -38,7 +38,7 @@
         <!-- Category Filter -->
         <div class="form-group" style="margin-top: 1.5rem;">
           <label class="form-label" style="font-size: 0.8125rem;">Department</label>
-          <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+          <div class="category-filter-list" style="display: flex; flex-direction: column; gap: 0.4rem;">
             <button 
               @click="handleCategoryChange('all')" 
               class="filter-pill"
