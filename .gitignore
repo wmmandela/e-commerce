@@ -19,3 +19,4 @@ frontend/dist/
 *.sqlite
 *.sqlite-*
 
+.env*.local
