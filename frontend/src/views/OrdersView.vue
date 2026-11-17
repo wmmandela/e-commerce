@@ -23,10 +23,10 @@
       <p>Loading your orders...</p>
     </div>
 
-    <div v-else-if="orders.length === 0" class="card" style="text-align: center; padding: 4rem 2rem;">
+    <div v-else-if="visibleOrders.length === 0" class="card" style="text-align: center; padding: 4rem 2rem;">
       <div style="font-size: 3rem; margin-bottom: 1rem;">📦</div>
-      <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">No orders placed yet</h3>
-      <p style="color: var(--text-muted); margin-bottom: 1.5rem;">You haven't made any purchases yet. Explore our Kenyan catalogue to find genuine products!</p>
+      <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">No completed orders to show</h3>
+      <p style="color: var(--text-muted); margin-bottom: 1.5rem;">Orders appear here after M-PESA returns a final result. Pending attempts remain linked to their orders while confirmation is in progress.</p>
       <router-link to="/catalogue" class="btn btn-primary">
         Browse Catalogue
       </router-link>
@@ -34,7 +34,7 @@
 
     <div v-else class="orders-list" style="display: flex; flex-direction: column; gap: 1.25rem;">
       <div 
-        v-for="ord in orders" 
+        v-for="ord in visibleOrders"
         :key="ord.id" 
         class="card order-card"
         style="padding: 1.5rem; transition: all 0.2s;"
@@ -99,7 +99,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '../stores/auth';
 
@@ -107,6 +107,7 @@ const router = useRouter();
 const authStore = useAuthStore();
 const orders = ref([]);
 const loading = ref(true);
+const visibleOrders = computed(() => orders.value.filter(order => order.status !== 'pending'));
 
 onMounted(async () => {
   if (!authStore.isAuthenticated) {
