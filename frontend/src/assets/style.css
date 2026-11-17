@@ -48,12 +48,16 @@
   padding: 0;
 }
 
+html, body, #app { width: 100%; max-width: 100%; min-width: 0; }
+#app { overflow-x: clip; }
+
 body {
   font-family: var(--font-body);
   background-color: var(--bg-body);
   color: var(--text-main);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -700,10 +704,14 @@ input, select, textarea {
 @media (min-width: 641px) and (max-width: 900px) {
   body { padding-bottom: calc(66px + env(safe-area-inset-bottom)); }
   .mobile-bottom-nav {
-    position: fixed;
+    position: fixed !important;
     z-index: 80;
-    inset: auto 0 0;
-    display: grid;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 100vw;
+    display: grid !important;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     padding: .35rem .5rem calc(.35rem + env(safe-area-inset-bottom));
     background: rgba(255,255,255,.97);
@@ -736,10 +744,14 @@ input, select, textarea {
   .navbar-actions .btn-primary { display: none; }
   .dropdown-menu { position: fixed; right: .75rem; top: 4rem; width: min(280px, calc(100vw - 1.5rem)); }
   .mobile-bottom-nav {
-    position: fixed;
+    position: fixed !important;
     z-index: 80;
-    inset: auto 0 0;
-    display: grid;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 100vw;
+    display: grid !important;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     padding: .35rem .35rem calc(.35rem + env(safe-area-inset-bottom));
     background: rgba(255,255,255,.97);

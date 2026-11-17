@@ -12,6 +12,7 @@
     <Footer />
 
     <!-- Always mounted with the app shell so it remains present across route changes. -->
+    <Teleport to="body">
     <nav class="mobile-bottom-nav" aria-label="Main navigation">
       <router-link to="/" class="mobile-nav-item">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg>
@@ -34,6 +35,7 @@
         <span>{{ authStore.isAuthenticated ? 'Payments' : 'Sign in' }}</span>
       </router-link>
     </nav>
+    </Teleport>
   </div>
 </template>
 
@@ -61,9 +63,13 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  width: 100%;
+  min-width: 0;
 }
 
 .main-content {
   flex: 1;
+  width: 100%;
+  min-width: 0;
 }
 </style>

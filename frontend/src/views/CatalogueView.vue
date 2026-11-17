@@ -225,6 +225,7 @@ function getActiveCategoryName() {
 
 @media (max-width: 640px) {
   .catalogue-page { padding: 1.1rem .875rem 2rem !important; }
+  .catalogue-page, .catalogue-layout, .catalogue-layout > main { min-width: 0; max-width: 100%; }
   .catalogue-page > div:first-child { margin-bottom: 1rem !important; }
   .catalogue-title { font-size: 1.8rem !important; }
   .catalogue-layout { gap: .8rem !important; }
@@ -243,6 +244,9 @@ function getActiveCategoryName() {
   .shop-rail-controls .rail-arrow { display: inline-flex; width: 1.9rem; height: 1.9rem; }
   .catalogue-page .catalogue-product-rail {
     display: flex !important;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     gap: .75rem !important;
     overflow-x: auto;
     overscroll-behavior-x: contain;
