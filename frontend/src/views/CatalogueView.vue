@@ -92,6 +92,12 @@
             <span v-if="productStore.activeCategory !== 'all'"> in <em>{{ getActiveCategoryName() }}</em></span>
           </span>
 
+          <div class="shop-rail-controls">
+            <span class="shop-rail-hint">Swipe to browse</span>
+            <button class="rail-arrow" aria-label="Scroll products left" @click="scrollProducts(-1)">‹</button>
+            <button class="rail-arrow" aria-label="Scroll products right" @click="scrollProducts(1)">›</button>
+          </div>
+
           <div class="catalogue-currency" style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.8125rem; color: var(--text-muted);">
             <span>Currency: <strong>KSh (Kenyan Shilling)</strong></span>
           </div>
@@ -114,7 +120,7 @@
         </div>
 
         <!-- Product Grid -->
-        <div v-else class="product-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem;">
+        <div v-else ref="productRail" class="product-grid catalogue-product-rail" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem;">
           <ProductCard 
             v-for="product in productStore.products" 
             :key="product.id" 
@@ -127,11 +133,18 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useProductStore } from '../stores/products';
 import ProductCard from '../components/ProductCard.vue';
 
 const productStore = useProductStore();
+const productRail = ref(null);
+
+function scrollProducts(direction) {
+  const rail = productRail.value;
+  if (!rail) return;
+  rail.scrollBy({ left: direction * Math.max(rail.clientWidth * 0.78, 240), behavior: 'smooth' });
+}
 
 onMounted(async () => {
   if (productStore.categories.length === 0) {
@@ -225,6 +238,22 @@ function getActiveCategoryName() {
   .catalogue-results-bar { padding: .7rem .85rem !important; margin-bottom: .8rem !important; }
   .catalogue-results-bar > span { font-size: .8rem !important; }
   .catalogue-currency { display: none !important; }
-  .catalogue-page .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: .65rem !important; }
+  .shop-rail-controls { display: flex; align-items: center; gap: .35rem; }
+  .shop-rail-hint { color: var(--text-muted); font-size: .68rem; white-space: nowrap; }
+  .shop-rail-controls .rail-arrow { display: inline-flex; width: 1.9rem; height: 1.9rem; }
+  .catalogue-page .catalogue-product-rail {
+    display: flex !important;
+    gap: .75rem !important;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    padding: .1rem .1rem .6rem;
+  }
+  .catalogue-page .catalogue-product-rail > * { flex: 0 0 min(78vw, 300px); min-width: 0; scroll-snap-align: start; }
+  .catalogue-product-rail::-webkit-scrollbar { height: 4px; }
+  .catalogue-product-rail::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
 }
 </style>
