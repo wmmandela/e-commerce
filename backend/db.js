@@ -1,5 +1,4 @@
 const path = require('path');
-const bcrypt = require('bcryptjs');
 
 const dbPath = path.resolve(__dirname, 'ecommerce.db');
 const usesTurso = Boolean(process.env.TURSO_DATABASE_URL);
@@ -79,9 +78,15 @@ const initDb = async (forceReset = false) => {
       estate TEXT DEFAULT 'Kilimani',
       password_hash TEXT NOT NULL,
       avatar_url TEXT,
+      is_active INTEGER NOT NULL DEFAULT 1,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )
   `);
+  const userColumns = await all('PRAGMA table_info(users)');
+  if (!userColumns.some(column => column.name === 'is_active')) {
+    await run('ALTER TABLE users ADD COLUMN is_active INTEGER NOT NULL DEFAULT 1');
+  }
+  await run('UPDATE users SET is_active = 0 WHERE email = ?', ['user@demo.com']);
 
   // User Devices Table (Multi-Device Shopping & Cross-Device Sync)
   await run(`
@@ -570,42 +575,6 @@ const initDb = async (forceReset = false) => {
     'Desk Pen and Pencil Holder', 'A desk organiser for keeping pens, pencils, and markers within easy reach.',
     JSON.stringify({ 'Style': 'Desk organiser', 'Use': 'Pen and pencil storage' }), 'pocket-pencil-case'
   ]);
-
-  // Seed demo user with Kenyan details
-  const userCount = await get('SELECT COUNT(*) as count FROM users');
-  if (userCount.count === 0) {
-    console.log('Seeding demo user with authentic Kenyan profile...');
-    const salt = await bcrypt.genSalt(10);
-    const passHash = await bcrypt.hash('DemoPass123!', salt);
-
-    const userRes = await run(
-      `INSERT INTO users (name, email, phone, county, estate, password_hash, avatar_url)
-       VALUES (?, ?, ?, ?, ?, ?, ?)`,
-      ['Mandela Machera', 'user@demo.com', '254712345678', 'Nairobi', 'Kilimani', passHash, 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80']
-    );
-
-    // Initial devices for demo user reflecting Kenyan devices
-    await run(
-      `INSERT INTO user_devices (user_id, device_id, device_name, device_type, browser, os, ip_address)
-       VALUES (?, ?, ?, ?, ?, ?, ?)`,
-      [userRes.id, 'device_laptop_demo_1', 'MacBook Pro - Nairobi Office', 'desktop', 'Chrome 131', 'macOS Sonoma', '197.232.88.14']
-    );
-
-    await run(
-      `INSERT INTO user_devices (user_id, device_id, device_name, device_type, browser, os, ip_address)
-       VALUES (?, ?, ?, ?, ?, ?, ?)`,
-      [userRes.id, 'device_phone_demo_2', 'Tecno Camon 30 Pro (Safaricom 5G)', 'mobile', 'Chrome Mobile', 'Android 14', '197.232.88.22']
-    );
-
-    // Seed cart items in database
-    const sampleProducts = await all('SELECT id FROM products LIMIT 2');
-    if (sampleProducts.length >= 2) {
-      await run(
-        `INSERT INTO cart_items (user_id, product_id, quantity) VALUES (?, ?, ?), (?, ?, ?)`,
-        [userRes.id, sampleProducts[0].id, 1, userRes.id, sampleProducts[1].id, 2]
-      );
-    }
-  }
 
   console.log('SokoBora Database initialized successfully.');
 };

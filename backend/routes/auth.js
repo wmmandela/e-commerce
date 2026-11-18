@@ -89,7 +89,7 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ error: 'Email and password are required.' });
     }
 
-    const user = await get('SELECT * FROM users WHERE email = ?', [email.toLowerCase().trim()]);
+    const user = await get('SELECT * FROM users WHERE email = ? AND is_active = 1', [email.toLowerCase().trim()]);
     if (!user) {
       return res.status(401).json({ error: 'Invalid email or password.' });
     }

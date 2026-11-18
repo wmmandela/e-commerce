@@ -15,17 +15,6 @@
         </p>
       </div>
 
-      <!-- Quick Fill Demo Button for Evaluator -->
-      <div style="background: var(--primary-light); border: 1px dashed var(--border-focus); border-radius: var(--radius-lg); padding: 0.75rem 1rem; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
-        <div>
-          <div style="font-size: 0.75rem; font-weight: 800; color: var(--primary);">Want to take a look around?</div>
-          <div style="font-size: 0.75rem; color: var(--text-muted);">Use a sample account to explore the shop.</div>
-        </div>
-        <button @click="fillDemo" class="btn btn-primary btn-sm" style="font-size: 0.75rem; padding: 0.25rem 0.6rem;">
-          Try sample account
-        </button>
-      </div>
-
       <form @submit.prevent="handleLogin">
         <div class="form-group">
           <label class="form-label">Email Address</label>
@@ -85,13 +74,8 @@ const route = useRoute();
 const authStore = useAuthStore();
 const cartStore = useCartStore();
 
-const email = ref('user@demo.com');
-const password = ref('DemoPass123!');
-
-function fillDemo() {
-  email.value = 'user@demo.com';
-  password.value = 'DemoPass123!';
-}
+const email = ref('');
+const password = ref('');
 
 async function handleLogin() {
   try {

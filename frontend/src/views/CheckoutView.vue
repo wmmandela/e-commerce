@@ -214,8 +214,8 @@ const authStore = useAuthStore();
 const cartStore = useCartStore();
 
 const shipping = ref({
-  name: authStore.user?.name || 'Mandela Machera',
-  phone: authStore.user?.phone || '254712345678',
+  name: authStore.user?.name || '',
+  phone: authStore.user?.phone || '',
   county: authStore.user?.county || 'Nairobi',
   estate: authStore.user?.estate || 'Kilimani',
   address: 'The Mirage Tower, Floor 4, Chiromo Rd'

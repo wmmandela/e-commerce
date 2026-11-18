@@ -4,7 +4,7 @@ A full-stack, Kenyan-themed E-Commerce web application built with **Vue 3** and 
 
 Designed and implemented in accordance with all project specifications with authentic Kenyan context:
 1. **Register (Jisajili)** — User account creation with Kenyan phone formatting (`2547XXXXXXXX`), County & Estate selection, and secure password hashing.
-2. **Login (Ingia)** — JWT-based authentication with 1-Click Demo Login (`user@demo.com` / `DemoPass123!`), automatic device tracking, and persistent cart restoration.
+2. **Login (Ingia)** — JWT-based authentication for registered users, automatic device tracking, and persistent cart restoration.
 3. **Browse Product Catalogue (Duka la Bidhaa)** — Curated Kenyan departments (*Smartphones & Simu, Laptops & Tarakilishi, Sauti & Wearables, Mitindo & Kenyan Fashion, Boma & Smart Living*). Features genuine Kenyan brands (Bata Safari Boots, Ramtons Kenya, Oraimo, Nyeri AA Coffee, Maasai Narok beadwork) with KEBS compliance stamps.
 4. **Load Products onto the Shopping Cart (Kikapu cha Ununuzi)** — Database-backed shopping cart stored in SQLite (`cart_items` table), preventing cart loss and enabling cross-device sync, with 16% Kenya VAT (KRA) and Nairobi/Upcountry shipping rates.
 5. **Simulate Payment (Lipa Na M-PESA)** — Built with Safaricom Daraja M-Pesa API sandbox credentials from `rideconnect` (Paybill `174379`, Passkey `bfb279f...`), featuring an authentic on-screen Safaricom SIM prompt, Hakikisha business name verification (*SOKO BORA RETAIL KENYA*), PIN entry (`1234`), and official Safaricom SMS receipt simulation.
@@ -57,19 +57,9 @@ Open **http://localhost:5173** in your browser.
 
 ---
 
-## 🔑 Demo Account Credentials
+## 🔑 Account Access
 
-For grading and quick evaluation, the login page includes a **1-Click Auto-Fill** button:
-
-| Field | Value |
-|---|---|
-| **Customer Name** | Mandela Machera |
-| **Email** | `user@demo.com` |
-| **Password** | `DemoPass123!` |
-| **M-Pesa Phone** | `254712345678` |
-| **County & Estate** | Nairobi • Kilimani |
-| **M-Pesa Test PIN** | `1234` |
-| **M-Pesa Paybill** | `174379` |
+Create an account from the registration page, then sign in with your registered email and password.
 
 ---
 
