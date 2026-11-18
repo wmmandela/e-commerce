@@ -47,14 +47,8 @@ export const useCartStore = defineStore('cart', () => {
 
   async function fetchCart() {
     if (!authStore.isAuthenticated) {
-      const saved = localStorage.getItem('sokobora_guest_cart');
-      if (saved) {
-        try {
-          items.value = JSON.parse(saved);
-        } catch (e) {
-          items.value = [];
-        }
-      }
+      localStorage.removeItem('sokobora_guest_cart');
+      items.value = [];
       calculateLocalSummary();
       return;
     }
@@ -79,25 +73,7 @@ export const useCartStore = defineStore('cart', () => {
 
   async function addToCart(product, quantity = 1) {
     if (!authStore.isAuthenticated) {
-      const existing = items.value.find(i => i.product_id === product.id || i.id === product.id);
-      if (existing) {
-        existing.quantity += quantity;
-      } else {
-        items.value.push({
-          product_id: product.id,
-          id: product.id,
-          title: product.title,
-          brand: product.brand,
-          price: product.price,
-          original_price: product.original_price,
-          image_url: product.image_url,
-          stock: product.stock,
-          quantity
-        });
-      }
-      localStorage.setItem('sokobora_guest_cart', JSON.stringify(items.value));
-      calculateLocalSummary();
-      return { success: true };
+      return { success: false, requiresAuth: true };
     }
 
     loading.value = true;
@@ -125,16 +101,6 @@ export const useCartStore = defineStore('cart', () => {
 
   async function updateQuantity(productId, quantity) {
     if (!authStore.isAuthenticated) {
-      const item = items.value.find(i => i.product_id === productId || i.id === productId);
-      if (item) {
-        if (quantity <= 0) {
-          items.value = items.value.filter(i => (i.product_id || i.id) !== productId);
-        } else {
-          item.quantity = quantity;
-        }
-      }
-      localStorage.setItem('sokobora_guest_cart', JSON.stringify(items.value));
-      calculateLocalSummary();
       return;
     }
 
@@ -160,9 +126,6 @@ export const useCartStore = defineStore('cart', () => {
 
   async function removeFromCart(productId) {
     if (!authStore.isAuthenticated) {
-      items.value = items.value.filter(i => (i.product_id || i.id) !== productId);
-      localStorage.setItem('sokobora_guest_cart', JSON.stringify(items.value));
-      calculateLocalSummary();
       return;
     }
 
@@ -187,9 +150,6 @@ export const useCartStore = defineStore('cart', () => {
 
   async function clearCart() {
     if (!authStore.isAuthenticated) {
-      items.value = [];
-      localStorage.removeItem('sokobora_guest_cart');
-      calculateLocalSummary();
       return;
     }
 
@@ -210,35 +170,6 @@ export const useCartStore = defineStore('cart', () => {
     }
   }
 
-  async function mergeGuestCart() {
-    const saved = localStorage.getItem('sokobora_guest_cart');
-    if (!saved || !authStore.isAuthenticated) return;
-
-    try {
-      const guestItems = JSON.parse(saved).map(i => ({
-        productId: i.product_id || i.id,
-        quantity: i.quantity || 1
-      }));
-
-      if (guestItems.length > 0) {
-        const res = await fetch('/api/cart/merge', {
-          method: 'POST',
-          headers: authStore.authHeaders,
-          body: JSON.stringify({ guestItems })
-        });
-        if (res.ok) {
-          const data = await res.json();
-          items.value = data.cart.items;
-          summary.value = data.cart.summary;
-          localStorage.removeItem('sokobora_guest_cart');
-          lastSynced.value = new Date().toLocaleTimeString();
-        }
-      }
-    } catch (e) {
-      console.warn('Cart merge error:', e);
-    }
-  }
-
   return {
     items,
     summary,
@@ -250,7 +181,6 @@ export const useCartStore = defineStore('cart', () => {
     addToCart,
     updateQuantity,
     removeFromCart,
-    clearCart,
-    mergeGuestCart
+    clearCart
   };
 });

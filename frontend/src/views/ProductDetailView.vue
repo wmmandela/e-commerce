@@ -176,12 +176,14 @@
 import { ref, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useProductStore } from '../stores/products';
+import { useAuthStore } from '../stores/auth';
 import { useCartStore } from '../stores/cart';
 import ProductCard from '../components/ProductCard.vue';
 
 const route = useRoute();
 const router = useRouter();
 const productStore = useProductStore();
+const authStore = useAuthStore();
 const cartStore = useCartStore();
 
 const product = ref(null);
@@ -207,6 +209,10 @@ watch(() => route.params.slug, loadProduct);
 
 async function handleAddToCart() {
   if (!product.value || product.value.stock <= 0) return;
+  if (!authStore.isAuthenticated) {
+    router.push({ name: 'Login', query: { redirect: route.fullPath } });
+    return;
+  }
   await cartStore.addToCart(product.value, qty.value);
   isAdded.value = true;
   setTimeout(() => {
@@ -216,6 +222,10 @@ async function handleAddToCart() {
 
 async function handleBuyNow() {
   if (!product.value || product.value.stock <= 0) return;
+  if (!authStore.isAuthenticated) {
+    router.push({ name: 'Login', query: { redirect: route.fullPath } });
+    return;
+  }
   await cartStore.addToCart(product.value, qty.value);
   router.push('/cart');
 }

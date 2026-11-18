@@ -119,11 +119,12 @@
 
 <script setup>
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useAuthStore } from '../stores/auth';
 import { useCartStore } from '../stores/cart';
 
 const router = useRouter();
+const route = useRoute();
 const authStore = useAuthStore();
 const cartStore = useCartStore();
 
@@ -137,9 +138,8 @@ const password = ref('');
 async function handleRegister() {
   try {
     await authStore.register(name.value, email.value, phone.value, county.value, estate.value, password.value);
-    await cartStore.mergeGuestCart();
     await cartStore.fetchCart();
-    router.push('/');
+    router.push(route.query.redirect || '/');
   } catch (err) {
     // Handled in store
   }

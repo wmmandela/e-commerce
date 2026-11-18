@@ -56,6 +56,8 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useAuthStore } from '../stores/auth';
 import { useCartStore } from '../stores/cart';
 
 const props = defineProps({
@@ -66,6 +68,9 @@ const props = defineProps({
 });
 
 const cartStore = useCartStore();
+const authStore = useAuthStore();
+const route = useRoute();
+const router = useRouter();
 const isAdding = ref(false);
 
 function formatPrice(val) {
@@ -75,6 +80,10 @@ function formatPrice(val) {
 
 async function handleAddToCart() {
   if (props.product.stock <= 0) return;
+  if (!authStore.isAuthenticated) {
+    router.push({ name: 'Login', query: { redirect: route.fullPath } });
+    return;
+  }
   isAdding.value = true;
   await cartStore.addToCart(props.product, 1);
   setTimeout(() => {

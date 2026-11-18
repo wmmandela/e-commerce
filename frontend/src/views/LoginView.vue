@@ -80,7 +80,6 @@ const password = ref('');
 async function handleLogin() {
   try {
     await authStore.login(email.value, password.value);
-    await cartStore.mergeGuestCart();
     await cartStore.fetchCart();
 
     const redirect = route.query.redirect || '/';
